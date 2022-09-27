@@ -1,5 +1,4 @@
-package com.cydeo.model.controller;
-
+package com.cydeo.controller;
 
 import com.cydeo.bootstrap.DataGenerator;
 import com.cydeo.model.Employee;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-private final EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -24,16 +23,22 @@ private final EmployeeService employeeService;
     @GetMapping("/register")
     public String createEmployee(Model model){
 
-model.addAttribute("employee",new Employee());
-model.addAttribute("stateList", DataGenerator.getAllStates());
+        model.addAttribute("employee", new Employee());
+        model.addAttribute("stateList", DataGenerator.getAllStates());
 
         return "employee/employee-create";
     }
-    @PostMapping("/insert")
-    public String insertEmployee(@ModelAttribute("employee") Employee employee){
-employeeService.saveEmployee(employee);
 
-return "employee/employee-list";
+    @PostMapping("/insert")
+    public String insertEmployee(@ModelAttribute("employee") Employee employee) {
+        employeeService.saveEmployee(employee);
+        return "redirect:/employee/list"; //with redirect - we are using endpoints
+    }
+
+    @GetMapping("/list")
+    public String listEmployees(Model model){
+        model.addAttribute("employeeList", employeeService.readAllEmployees());
+        return "employee/employee-list"; //with redirect - we are using html file paths
     }
 
 }

@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,8 +15,8 @@ public class Employee {
     private String firstName;
     private String lastName;
 
-    //Thymeleaf returns yyyy-mm-dd, but LocalDate accepts mm-dd-yyyy, we have to use annotation to fix the changes
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    //Thymeleaf returns yyyy-mm-dd (LocalDate returns mm-dd-yyyy)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     private String email;
@@ -27,6 +26,5 @@ public class Employee {
     private String city;
     private String state;
     private String zipCode;
-
 
 }
